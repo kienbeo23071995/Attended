@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Group01_PRJ.Models.Session>
+
+@{
+    ViewData["Title"] = "Attended";
+}
+
+<h1>Attended</h1>
+<form method="GET" class="w-25">
+    <div class="form-group">
+        <input type="date" name="date" id="date" value="@ViewBag.date.ToString("yyyy-MM-dd")" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Search" class="btn btn-primary" />
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Class)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Course)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Room)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Slot)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                Teacher
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Class.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Course.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Room.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Slot.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Email)
+                </td>
+                <td>
+                    @Html.ActionLink("Attend", "Attend", new { roomId = item.Roomid, slotId = item.Slotid, date = item.Date })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

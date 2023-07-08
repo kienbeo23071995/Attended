@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Attended";
+}
+
+<h1>Attended - @ViewBag.session.Class.Name - @ViewBag.session.Slot.Name - @ViewBag.session.Date.ToString("dd/MM/yyyy")</h1>
+<form method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Usernmae
+                </th>
+                <th>
+                    Full Name
+                </th>
+                <th>
+                    Email
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int count = 0;
+            }
+            @foreach (UserClass item in ViewBag.userClasses)
+            {
+                count++;
+                <tr>
+                    <td>
+                        @item.User.Username
+                    </td>
+                    <td>
+                        @item.User.Fullname
+                    </td>
+                    <td>
+                        @item.User.Email
+                    </td>
+                    <td>
+                        <input type="hidden" name="attends" id="attend-@count" value="@(ViewBag.session.checkAttend(item.Userid) ? "true": "false")" /> 
+                        <input type="radio" onchange="changeAttend(@count, true)" name="attend-@count" @(ViewBag.session.Attendeds.Count > 0 ? ViewBag.session.checkAttend(item.Userid) ? "checked": "": "") /> attend
+                        <input type="radio" onchange="changeAttend(@count, false)" name="attend-@count" @(ViewBag.session.Attendeds.Count > 0 ?ViewBag.session.checkAttend(item.Userid) ? "": "checked": "")/> absent
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="form-group d-flex justify-content-end">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+</form>
+<script>
+    const changeAttend  = (number, value) => {
+        console.log(number, value);
+        var input = document.getElementById("attend-"+number);
+        input.value = value;
+    }
+</script>
